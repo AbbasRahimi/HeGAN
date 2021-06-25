@@ -1,5 +1,5 @@
 import tensorflow.compat.v1 as tf
-from HeGAN.source_code import config
+from source_code import config
 tf.disable_v2_behavior()
 
 class Generator():

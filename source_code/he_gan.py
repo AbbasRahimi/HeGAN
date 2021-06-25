@@ -1,14 +1,14 @@
 import os
 import tensorflow.compat.v1 as tf
-from HeGAN.source_code import generator
-from HeGAN.source_code import discriminator
-from HeGAN.source_code import config
-from HeGAN.source_code import utils
+from source_code import generator
+from source_code import discriminator
+from source_code import config
+from source_code import utils
 import time
 import numpy as np
-from HeGAN.source_code.dblp_evaluation import DBLP_evaluation
-from HeGAN.source_code.yelp_evaluation import Yelp_evaluation
-from HeGAN.source_code.aminer_evaluation import Aminer_evaluation
+from source_code.dblp_evaluation import DBLP_evaluation
+from source_code.yelp_evaluation import Yelp_evaluation
+from source_code.aminer_evaluation import Aminer_evaluation
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.disable_v2_behavior()
