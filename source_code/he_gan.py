@@ -18,7 +18,7 @@ class Model():
     def __init__(self):
 
         t = time.time()
-        print("reading graph... ")
+        print("reading graph...")
         self.n_node, self.n_relation, self.graph = utils.read_graph(config.graph_filename)
         self.node_list = self.graph.keys()#range(0, self.n_node)
         print('[%.2f] reading graph finished. #node = %d #relation = %d' % (time.time() - t, self.n_node, self.n_relation))
