@@ -1,5 +1,6 @@
-import tensorflow as tf
-import config
+import tensorflow.compat.v1 as tf
+from source_code import config
+tf.disable_v2_behavior()
 
 class Generator():
     def __init__(self, n_node, n_relation, node_emd_init, relation_emd_init):
@@ -37,7 +38,7 @@ class Generator():
                                        trainable = True)
         #self.bias_vector = tf.Variable(tf.zeros([self.n_node]))
 
-        self.node_id =  tf.placeholder(tf.int32, shape = [None])
+        self.node_id = tf.placeholder(tf.int32, shape = [None])
         self.relation_id = tf.placeholder(tf.int32, shape = [None])
         self.noise_embedding = tf.placeholder(tf.float32, shape = [None, self.emd_dim])
 

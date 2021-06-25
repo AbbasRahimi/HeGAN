@@ -1,5 +1,6 @@
-import tensorflow as tf
-import config
+import tensorflow.compat.v1 as tf
+from source_code import config
+tf.disable_v2_behavior()
 
 class Discriminator():
     def __init__(self, n_node, n_relation, node_emd_init, relation_emd_init):

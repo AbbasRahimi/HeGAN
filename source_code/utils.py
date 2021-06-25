@@ -51,7 +51,7 @@ def read_embeddings(filename, n_node, n_embed):
     return embedding_matrix
 
 if __name__ == '__main__':
-    n_node, n_relation, graph  = read_dblp_graph()
+    n_node, n_relation, graph = read_dblp_graph()
 
     #embedding_matrix = read_embeddings('../data/dblp/rel_embeddings.txt', 6, 64)
-    print graph[1][1]
+    print(graph[1][1])
