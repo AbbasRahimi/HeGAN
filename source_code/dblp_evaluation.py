@@ -7,11 +7,13 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 import math
+import os
 
 class DBLP_evaluation():
     def __init__(self):
         self.author2id = {}
         self.author_num = 0
+
         with open('../data/dblp_author_map_id.dat') as infile:
             for line in infile.readlines():
                 id, author = line.strip().split('\t')[:2]
@@ -41,12 +43,12 @@ class DBLP_evaluation():
         #        self.link_label.append([u, b, label])
 
         self.train_link_label = []
-        with open('../data/dblp_lp/dblp_ap.train_0.8_lr') as infile:
+        with open('../data/dblp_lp/dblp_ap.train_0.8_lr.dat') as infile:
             for line in infile.readlines():
                 u, b, label = [int(item) for item in line.strip().split()]
                 self.train_link_label.append([u, b, label])
         self.test_link_label = []
-        with open('../data/dblp_lp/dblp_ap.test_0.8_new') as infile:
+        with open('../data/dblp_lp/dblp_ap.test_0.8_new.dat') as infile:
             for line in infile.readlines():
                 u, b, label = [int(item) for item in line.strip().split()]
                 self.test_link_label.append([u, b, label])
