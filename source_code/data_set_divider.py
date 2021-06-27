@@ -1,8 +1,8 @@
 def load_file(test_set_percentage):
-    f1 = open("../data/dblp_lp/dblp_ap.train_0.8_lr.dat", "w")
-    f2 = open("../data/dblp_lp/dblp_ap.test_0.8_new.dat", "w")
+    f1 = open("../data/yelp_lp/yelp_ub.train_0.8_lr.dat", "w")
+    f2 = open("../data/yelp_lp/yelp_ub.test_0.8_new.dat", "w")
     i = 0
-    with open('../data/dblp_triple.dat') as infile:
+    with open('../data/yelp_triple.dat') as infile:
         for line in infile.readlines():
             u, b, label = [int(item) for item in line.strip().split()]
             # print("u: ", u, "b: ", b, "label: ", label)

@@ -20,9 +20,8 @@ class Model():
         t = time.time()
         print("reading graph...")
         self.n_node, self.n_relation, self.graph = utils.read_graph(config.graph_filename)
-        self.node_list = self.graph.keys()  # range(0, self.n_node)
-        print('[%.2f] reading graph finished. #node = %d #relation = %d' % (
-        time.time() - t, self.n_node, self.n_relation))
+        self.node_list = list(self.graph.keys())  # range(0, self.n_node)
+        print('[%.2f] reading graph finished. #node = %d #relation = %d' % (time.time() - t, self.n_node, self.n_relation))
 
         t = time.time()
         print("read initial embeddings...")
@@ -108,18 +107,19 @@ class Model():
             # D-step
             # t1 = time.time()
             for d_epoch in range(config.d_epoch):
+                print("node_list\n", self.node_list)
                 np.random.shuffle(self.node_list)
                 one_epoch_dis_loss = 0.0
                 one_epoch_pos_loss = 0.0
                 one_epoch_neg_loss_1 = 0.0
                 one_epoch_neg_loss_2 = 0.0
 
-                for index in range(len(self.node_list) / config.batch_size):
+                for index in range(round(len(self.node_list) / config.batch_size)):
                     # t1 = time.time()
                     pos_node_ids, pos_relation_ids, pos_node_neighbor_ids, neg_node_ids_1, neg_relation_ids_1, neg_node_neighbor_ids_1, neg_node_ids_2, neg_relation_ids_2, node_fake_neighbor_embedding = self.prepare_data_for_d(
                         index)
                     # t2 = time.time()
-                    # print(t2 - t1
+                    # print(t2 - t1)
                     _, dis_loss, pos_loss, neg_loss_1, neg_loss_2 = self.sess.run(
                         [self.discriminator.d_updates, self.discriminator.loss, self.discriminator.pos_loss,
                          self.discriminator.neg_loss_1, self.discriminator.neg_loss_2],
@@ -164,7 +164,7 @@ class Model():
 
             one_epoch_batch_num = len(self.node_list) / config.batch_size
 
-            # print(t2 - t1
+            # print(t2 - t1)
             # exit()
             print('[%.2f] gen loss = %.4f, dis loss = %.4f pos loss = %.4f neg loss-1 = %.4f neg loss-2 = %.4f' % \
                   (time.time() - t, one_epoch_gen_loss / one_epoch_batch_num, one_epoch_dis_loss / one_epoch_batch_num,
@@ -216,7 +216,7 @@ class Model():
             for i in range(config.n_sample):
 
                 # sample real node and true relation
-                relations = self.graph[node_id].keys()
+                relations = list(self.graph[node_id].keys())
                 relation_id = relations[np.random.randint(0, len(relations))]
                 neighbors = self.graph[node_id][relation_id]
                 node_neighbor_id = neighbors[np.random.randint(0, len(neighbors))]
