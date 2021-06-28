@@ -9,6 +9,7 @@ import numpy as np
 from source_code.dblp_evaluation import DBLP_evaluation
 from source_code.yelp_evaluation import Yelp_evaluation
 from source_code.aminer_evaluation import Aminer_evaluation
+from source_code.family_evaluation import FAMILY_EVALUATION
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.disable_v2_behavior()
@@ -21,10 +22,11 @@ class Model():
         print("reading graph...")
         self.n_node, self.n_relation, self.graph = utils.read_graph(config.graph_filename)
         self.node_list = list(self.graph.keys())  # range(0, self.n_node)
-        print('[%.2f] reading graph finished. #node = %d #relation = %d' % (time.time() - t, self.n_node, self.n_relation))
+        print('[%.2f] reading graph finished. #node = %d #relation = %d' % (
+        time.time() - t, self.n_node, self.n_relation))
 
         t = time.time()
-        print("read initial embeddings...")
+        # print("read initial embeddings...")
         self.node_embed_init_d = utils.read_embeddings(filename=config.pretrain_node_emb_filename_d,
                                                        n_node=self.n_node,
                                                        n_embed=config.n_emb)
@@ -38,7 +40,7 @@ class Model():
         # self.rel_embed_init_g = utils.read_embeddings(filename=config.pretrain_rel_emb_filename_g,
         #                                              n_node=self.n_node,
         #                                              n_embed=config.n_emb)
-        print("[%.2f] read initial embeddings finished." % (time.time() - t))
+        # print("[%.2f] read initial embeddings finished." % (time.time() - t))
 
         print("build GAN model...")
         self.discriminator = None
@@ -52,6 +54,7 @@ class Model():
         self.dblp_evaluation = DBLP_evaluation()
         self.yelp_evaluation = Yelp_evaluation()
         self.aminer_evaluation = Aminer_evaluation()
+        self.family_evaluation = FAMILY_EVALUATION()
 
         self.config = tf.ConfigProto()
         self.config.gpu_options.allow_growth = True
@@ -291,6 +294,27 @@ class Model():
             macro_f1s.append(macro_f1)
         return micro_f1s, macro_f1s
 
+    def evaluate_family_cluster(self):
+        modes = [self.generator, self.discriminator]
+        scores = []
+        for i in range(2):
+            embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
+            score = self.family_evaluation.evaluate_family_cluster(embedding_matrix)
+            scores.append(score)
+
+        return scores
+
+    def evaluate_family_classification(self):
+        modes = [self.generator, self.discriminator]
+        micro_f1s = []
+        macro_f1s = []
+        for i in range(2):
+            embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
+            micro_f1, macro_f1 = self.family_evaluation.evaluate_family_classification(embedding_matrix)
+            micro_f1s.append(micro_f1)
+            macro_f1s.append(macro_f1)
+        return micro_f1s, macro_f1s
+
     def evaluate_paper_cluster(self):
         modes = [self.generator, self.discriminator]
         scores = []
@@ -343,6 +367,17 @@ class Model():
             # print('%d nmi = %.4f' % (i, score)
 
             auc, f1, acc = self.yelp_evaluation.evaluation_link_prediction(embedding_matrix)
+
+            print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
+
+    def evaluate_family_link_prediction(self):
+        modes = [self.generator, self.discriminator]
+
+        for i in range(2):
+            embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
+            # relation_matrix = self.sess.run(modes[i].relation_embedding_matrix)
+
+            auc, f1, acc = self.family_evaluation.evaluation_link_prediction(embedding_matrix)
 
             print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
 

@@ -40,14 +40,17 @@ def str_list_to_float(str_list):
     return [float(item) for item in str_list]
 
 def read_embeddings(filename, n_node, n_embed):
-
+    # TODO Check this function
     embedding_matrix = np.random.rand(n_node, n_embed)
     i = -1
-    with open(filename) as infile:
-        for line in infile.readlines()[1:]:
-            i += 1
-            emd = line.strip().split()
-            embedding_matrix[int(emd[0]), :] = str_list_to_float(emd[1:])
+    try:
+        with open(filename) as infile:
+            for line in infile.readlines()[1:]:
+                i += 1
+                emd = line.strip().split()
+                embedding_matrix[int(emd[0]), :] = str_list_to_float(emd[1:])
+    except IOError:
+        pass
     return embedding_matrix
 
 if __name__ == '__main__':
