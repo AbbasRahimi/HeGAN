@@ -42,7 +42,7 @@ class FAMILY_EVALUATION():
                 u, b, label = [int(item) for item in line.strip().split()]
                 self.train_link_label.append([u, b, label])
         self.test_link_label = []
-        with open('../data/family_lp/family_ub.test_0.8_new.dat') as infile:
+        with open('../data/family_lp/family_ub.test_0.2_new.dat') as infile:
             for line in infile.readlines():
                 u, b, label = [int(item) for item in line.strip().split()]
                 self.test_link_label.append([u, b, label])
