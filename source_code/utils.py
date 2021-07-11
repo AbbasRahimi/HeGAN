@@ -42,6 +42,7 @@ def str_list_to_float(str_list):
 def read_embeddings(filename, n_node, n_embed):
     # TODO Check this function
     embedding_matrix = np.random.rand(n_node, n_embed)
+    print(embedding_matrix)
     i = -1
     try:
         with open(filename) as infile:

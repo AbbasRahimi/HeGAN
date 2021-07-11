@@ -29,11 +29,10 @@ class FAMILY_EVALUATION():
         self.sample_num = 0
         with open('../data/family_label.dat') as infile:
             for line in infile.readlines():
-                print("here: ", line)
                 family, label = line.strip().split()[:2]
                 family = int(family)
                 label = int(label) - 1
-                print("here: ", family," ", label)
+                # print("here: ", family," ", label)
                 self.family_label[self.family2id[family]] = label
                 self.sample_num += 1
 

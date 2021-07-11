@@ -110,13 +110,14 @@ class Model():
             # D-step
             # t1 = time.time()
             for d_epoch in range(config.d_epoch):
-                print("node_list\n", self.node_list)
+                # print("node_list\n", self.node_list)
                 np.random.shuffle(self.node_list)
                 one_epoch_dis_loss = 0.0
                 one_epoch_pos_loss = 0.0
                 one_epoch_neg_loss_1 = 0.0
                 one_epoch_neg_loss_2 = 0.0
-
+                # print("node_list length ", len(self.node_list) ," _  bach_size: ", config.batch_size)
+                # print("index list size: ", round(len(self.node_list) / config.batch_size))
                 for index in range(round(len(self.node_list) / config.batch_size)):
                     # t1 = time.time()
                     pos_node_ids, pos_relation_ids, pos_node_neighbor_ids, neg_node_ids_1, neg_relation_ids_1, neg_node_neighbor_ids_1, neg_node_ids_2, neg_relation_ids_2, node_fake_neighbor_embedding = self.prepare_data_for_d(
