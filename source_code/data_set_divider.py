@@ -1,6 +1,6 @@
 def load_file(test_set_percentage):
     f1 = open("../data/family_lp/family_ub.train_0.8_lr.dat", "w")
-    f2 = open("../data/family_lp/family_ub.test_0.8_new.dat", "w")
+    f2 = open("../data/family_lp/family_ub.test_0.2_new.dat", "w")
     i = 0
     with open('../data/family_triple.dat') as infile:
         for line in infile.readlines():
