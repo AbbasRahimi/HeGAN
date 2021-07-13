@@ -93,6 +93,8 @@ class FAMILY_EVALUATION():
             test_x.append(embedding_list[a] + embedding_list[p])
             test_y.append(label)
 
+        print("test_x: \n", test_x, "\ntest_y:\n", test_y)
+
         lr = LogisticRegression()
         lr.fit(train_x, train_y)
 

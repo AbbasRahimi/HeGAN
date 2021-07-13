@@ -116,7 +116,7 @@ class Model():
                 one_epoch_pos_loss = 0.0
                 one_epoch_neg_loss_1 = 0.0
                 one_epoch_neg_loss_2 = 0.0
-                print("node_list length ", len(self.node_list) ," _  bach_size: ", config.batch_size)
+                print("node_list length ", len(self.node_list), " _  bach_size: ", config.batch_size)
                 print("index list size: ", round(len(self.node_list) / config.batch_size))
                 for index in range(round(len(self.node_list) / config.batch_size)):
                     # t1 = time.time()
@@ -193,7 +193,12 @@ class Model():
                 # micro_f1s, macro_f1s = self.evaluate_paper_classification()
                 # print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
                 # print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
-
+            elif config.dataset == 'family':
+                self.evaluate_family_link_prediction()
+                print("Link prediction done!")
+                # micro_f1s, macro_f1s = self.evaluate_paper_classification()
+                # print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
+                # print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
             # self.evaluate_aminer_link_prediction()
             # self.write_embeddings_to_file(epoch)
             # os.system('python ../evaluation/lp_evaluation_2.py')
@@ -316,6 +321,18 @@ class Model():
             macro_f1s.append(macro_f1)
         return micro_f1s, macro_f1s
 
+    def evaluate_family_link_prediction(self):
+        print("Link prediction started ......")
+        modes = [self.generator, self.discriminator]
+
+        for i in range(2):
+            embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
+            # relation_matrix = self.sess.run(modes[i].relation_embedding_matrix)
+
+            auc, f1, acc = self.family_evaluation.evaluation_link_prediction(embedding_matrix)
+
+            print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
+
     def evaluate_paper_cluster(self):
         modes = [self.generator, self.discriminator]
         scores = []
@@ -371,16 +388,6 @@ class Model():
 
             print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
 
-    def evaluate_family_link_prediction(self):
-        modes = [self.generator, self.discriminator]
-
-        for i in range(2):
-            embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
-            # relation_matrix = self.sess.run(modes[i].relation_embedding_matrix)
-
-            auc, f1, acc = self.family_evaluation.evaluation_link_prediction(embedding_matrix)
-
-            print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
 
     def evaluate_dblp_link_prediction(self):
         modes = [self.generator, self.discriminator]

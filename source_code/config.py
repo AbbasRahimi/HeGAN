@@ -8,7 +8,7 @@ n_epoch = 20
 saves_step = 10
 sig = 1.0
 
-# label_smooth = 0.0
+label_smooth = 0.0
 
 d_epoch = 15
 g_epoch = 5
