@@ -115,10 +115,10 @@ class FAMILY_EVALUATION():
             else:
                 pred_label.append(0)
         '''
-        # auc = roc_auc_score(test_y, pred_y, multi_class='ovr')
+        auc = roc_auc_score(test_y, pred_y)
         f1 = f1_score(test_y, pred_label)
         acc = accuracy_score(test_y, pred_label)
-        return f1, acc
+        return auc, f1, acc
 
 
 def str_list_to_float(self, str_list):

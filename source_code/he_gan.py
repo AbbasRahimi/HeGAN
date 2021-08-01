@@ -332,9 +332,9 @@ class Model():
             embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
             # relation_matrix = self.sess.run(modes[i].relation_embedding_matrix)
 
-            f1, acc = self.family_evaluation.evaluation_link_prediction(embedding_matrix)
+            auc, f1, acc = self.family_evaluation.evaluation_link_prediction(embedding_matrix)
 
-            print('auc = %.4f f1 = %.4f acc = %.4f' % (f1, acc))
+            print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
 
     def evaluate_paper_cluster(self):
         modes = [self.generator, self.discriminator]
