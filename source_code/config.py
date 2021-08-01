@@ -20,15 +20,15 @@ n_emb = 16
 dataset = 'family'
 
 #graph_filename = '../data/' + dataset + '/' + dataset + '_triple.dat'
-graph_filename = '/data/' + dataset + '_triple.dat'
+graph_filename = 'data/' + dataset + '_triple.dat'
 
 
-pretrain_node_emb_filename_d = '/pre_train/node_clustering/' + dataset + '_pre_train.emb'
-pretrain_node_emb_filename_g = '/pre_train/node_clustering/' + dataset + '_pre_train.emb'
+pretrain_node_emb_filename_d = 'pre_train/node_clustering/' + dataset + '_pre_train.emb'
+pretrain_node_emb_filename_g = 'pre_train/node_clustering/' + dataset + '_pre_train.emb'
 #pretrain_rel_emb_filename_d = '../data/' + dataset + '/rel_embeddings.txt'
 #depretrain_rel_emb_filename_g = '../data/' + dataset + '/rel_embeddings.txt'
 
-emb_filenames = ['/results/' + dataset + '_gen.emb',
-                 '/results/' + dataset + '_dis.emb']
+emb_filenames = ['results/' + dataset + '_gen.emb',
+                 'results/' + dataset + '_dis.emb']
 
-model_log = '/log/'
+model_log = 'log/'
