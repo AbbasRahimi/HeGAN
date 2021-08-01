@@ -14,7 +14,7 @@ class FAMILY_EVALUATION():
         self.family2id = {}
         self.family_num = 0
 
-        with open('../data/family_map_id.dat') as infile:
+        with open('../data/family1_map_id.dat') as infile:
             for line in infile.readlines():
                 id, family = line.strip().split()[:2]
                 id = int(id) - 1
@@ -27,7 +27,7 @@ class FAMILY_EVALUATION():
         # id - label
         self.family_label = {}
         self.sample_num = 0
-        with open('../data/family_label.dat') as infile:
+        with open('../data/family1_label.dat') as infile:
             for line in infile.readlines():
                 family, label = line.strip().split()[:2]
                 family = int(family)
@@ -84,6 +84,7 @@ class FAMILY_EVALUATION():
         train_x = []
         train_y = []
         for a, p, label in self.train_link_label:
+            print("a:",a,"p:",p,"train length:",len(self.train_link_label))
             train_x.append(embedding_list[a] + embedding_list[p])
             train_y.append(label)
 

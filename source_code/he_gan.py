@@ -1,15 +1,15 @@
 import os
 import tensorflow.compat.v1 as tf
-from source_code import generator
-from source_code import discriminator
-from source_code import config
-from source_code import utils
+import generator
+import discriminator
+import config
+import utils
 import time
 import numpy as np
-from source_code.dblp_evaluation import DBLP_evaluation
-from source_code.yelp_evaluation import Yelp_evaluation
-from source_code.aminer_evaluation import Aminer_evaluation
-from source_code.family_evaluation import FAMILY_EVALUATION
+from dblp_evaluation import DBLP_evaluation
+from yelp_evaluation import Yelp_evaluation
+from aminer_evaluation import Aminer_evaluation
+from family_evaluation import FAMILY_EVALUATION
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.disable_v2_behavior()
@@ -119,11 +119,11 @@ class Model():
                 print("node_list length ", len(self.node_list), " _  bach_size: ", config.batch_size)
                 print("index list size: ", round(len(self.node_list) / config.batch_size))
                 for index in range(round(len(self.node_list) / config.batch_size)):
-                    # t1 = time.time()
+                    t1 = time.time()
                     pos_node_ids, pos_relation_ids, pos_node_neighbor_ids, neg_node_ids_1, neg_relation_ids_1, neg_node_neighbor_ids_1, neg_node_ids_2, neg_relation_ids_2, node_fake_neighbor_embedding = self.prepare_data_for_d(
                         index)
-                    # t2 = time.time()
-                    # print(t2 - t1)
+                    t2 = time.time()
+                    print(t2 - t1)
                     _, dis_loss, pos_loss, neg_loss_1, neg_loss_2 = self.sess.run(
                         [self.discriminator.d_updates, self.discriminator.loss, self.discriminator.pos_loss,
                          self.discriminator.neg_loss_1, self.discriminator.neg_loss_2],
@@ -142,13 +142,13 @@ class Model():
                     one_epoch_pos_loss += pos_loss
                     one_epoch_neg_loss_1 += neg_loss_1
                     one_epoch_neg_loss_2 += neg_loss_2
-
+                    print("index: ", index)
             # G-step
 
             for g_epoch in range(config.g_epoch):
                 np.random.shuffle(self.node_list)
                 one_epoch_gen_loss = 0.0
-
+                print("g_epoch: ", g_epoch)
                 for index in range(round(len(self.node_list) / config.batch_size)):
                     gen_node_ids, gen_relation_ids, gen_noise_embedding, gen_dis_node_embedding, gen_dis_relation_embedding = self.prepare_data_for_g(
                         index)
@@ -165,7 +165,7 @@ class Model():
                                                                gen_dis_relation_embedding)})
 
                     one_epoch_gen_loss += gen_loss
-
+                    print("gen_index: ",index)
             one_epoch_batch_num = len(self.node_list) / config.batch_size
 
             # print(t2 - t1)
@@ -206,7 +206,7 @@ class Model():
         print("training completes")
 
     def prepare_data_for_d(self, index):
-
+        print("prepare_data_for_d")
         pos_node_ids = []
         pos_relation_ids = []
         pos_node_neighbor_ids = []
@@ -222,8 +222,9 @@ class Model():
         node_fake_neighbor_embedding = None
 
         for node_id in self.node_list[index * config.batch_size: (index + 1) * config.batch_size]:
+            print("node_id",node_id)
             for i in range(config.n_sample):
-
+                print("inside for...")
                 # sample real node and true relation
                 relations = list(self.graph[node_id].keys())
                 relation_id = relations[np.random.randint(0, len(relations))]
@@ -240,11 +241,13 @@ class Model():
                 neg_relation_id_1 = np.random.randint(0, self.n_relation)
                 while neg_relation_id_1 == relation_id:
                     neg_relation_id_1 = np.random.randint(0, self.n_relation)
+                    print("relation_id: ",relation_id," neg_relation_id_1:", neg_relation_id_1)
                 neg_relation_ids_1.append(neg_relation_id_1)
 
                 # sample fake node and true relation
                 neg_node_ids_2.append(node_id)
                 neg_relation_ids_2.append(relation_id)
+                print("config.n_sample: ", config.n_sample)
 
         # generate fake node
         noise_embedding = np.random.normal(0.0, config.sig, (len(neg_node_ids_2), config.n_emb))

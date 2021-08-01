@@ -1,11 +1,11 @@
-batch_size = 32
-lambda_gen = 1e-5
-lambda_dis = 1e-5
+batch_size = 16
+lambda_gen = 1e-3
+lambda_dis = 1e-3
 n_sample = 16
-lr_gen = 0.0001#1e-3
-lr_dis = 0.0001#1e-4
-n_epoch = 20
-saves_step = 10
+lr_gen = 0.01#1e-3
+lr_dis = 0.001#1e-4
+n_epoch = 10
+saves_step = 5
 sig = 1.0
 
 label_smooth = 0.0
@@ -13,7 +13,7 @@ label_smooth = 0.0
 d_epoch = 15
 g_epoch = 5
 
-n_emb = 64
+n_emb = 16
 
 # dataset = 'yelp'
 # dataset = 'dblp'
