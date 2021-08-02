@@ -98,7 +98,7 @@ class Yelp_evaluation():
         pred_y = lr.predict_proba(test_x)[:,1]
         pred_label = lr.predict(test_x)
 
-        auc = roc_auc_score(test_y, pred_y)
+        auc = roc_auc_score(test_y, pred_y,multi_class='ovr')
         f1 = f1_score(test_y, pred_label)
         acc = accuracy_score(test_y, pred_label)
 
