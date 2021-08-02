@@ -182,8 +182,9 @@ class Model():
                 # print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
                 # print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
             elif config.dataset == 'yelp':
-                gen_nmi, dis_nmi = self.evaluate_business_cluster()
-                print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
+                self.evaluate_yelp_link_prediction()
+                # gen_nmi, dis_nmi = self.evaluate_business_cluster()
+                # print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
                 # micro_f1s, macro_f1s = self.evaluate_business_classification()
                 # print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
                 # print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])

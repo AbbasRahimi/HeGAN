@@ -115,7 +115,7 @@ class FAMILY_EVALUATION():
             else:
                 pred_label.append(0)
         '''
-        auc = roc_auc_score(test_y, pred_y)
+        auc = roc_auc_score(test_y, pred_y, multi_class='ovr')
         f1 = f1_score(test_y, pred_label)
         acc = accuracy_score(test_y, pred_label)
         return auc, f1, acc
