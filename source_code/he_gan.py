@@ -52,7 +52,7 @@ class Model():
         self.saver = tf.train.Saver()
 
         # self.dblp_evaluation = DBLP_evaluation()
-        # self.yelp_evaluation = Yelp_evaluation()
+        self.yelp_evaluation = Yelp_evaluation()
         # self.aminer_evaluation = Aminer_evaluation()
         self.family_evaluation = FAMILY_EVALUATION()
 
