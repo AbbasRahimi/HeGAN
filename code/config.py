@@ -16,7 +16,7 @@ g_epoch = 5
 n_emb = 64
 
 dataset = 'yelp'
-
+#
 #graph_filename = '../data/' + dataset + '/' + dataset + '_triple.dat'
 graph_filename = 'data/' + dataset + '_triple.dat'
 
