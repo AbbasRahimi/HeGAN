@@ -1,5 +1,4 @@
 import os
-import tensorflow as tf
 import config
 import generator
 import discriminator
@@ -9,7 +8,10 @@ import numpy as np
 from dblp_evaluation import DBLP_evaluation
 from yelp_evaluation import Yelp_evaluation
 from aminer_evaluation import Aminer_evaluation
+import tensorflow.compat.v1 as tf
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+tf.disable_v2_behavior()
 
 class Model():
     def __init__(self):
@@ -166,8 +168,9 @@ class Model():
                 #print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
                 #print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
             elif config.dataset == 'yelp':
-                gen_nmi, dis_nmi = self.evaluate_business_cluster()
-                print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
+                self.evaluate_yelp_link_prediction()
+                # gen_nmi, dis_nmi = self.evaluate_business_cluster()
+                # print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
                 #micro_f1s, macro_f1s = self.evaluate_business_classification()
                 #print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
                 #print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
