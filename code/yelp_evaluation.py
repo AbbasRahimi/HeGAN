@@ -27,12 +27,12 @@ class Yelp_evaluation():
 
         self.train_link_label = list()
         self.test_link_label = list()
-        with open('data/yelp_lp/yelp_ub.test_0.8_new') as infile:
+        with open('data/yelp_lp/yelp_ub.test_0.8_new.dat') as infile:
             for line in infile.readlines():
                 u, b, label = [int(item) for item in line.strip().split()]
                 self.test_link_label.append([u, b, label])
 
-        with open('data/yelp_lp/yelp_ub.train_0.8_lr') as infile:
+        with open('data/yelp_lp/yelp_ub.train_0.8_lr.dat') as infile:
             for line in infile.readlines():
                 u, b, label = [int(item) for item in line.strip().split()]
                 self.train_link_label.append([u, b, label])

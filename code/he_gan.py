@@ -105,7 +105,7 @@ class Model():
             #D-step
             #t1 = time.time()
             for d_epoch in range(config.d_epoch):
-                np.random.shuffle(self.node_list)
+                np.random.shuffle(list(self.node_list))
                 one_epoch_dis_loss = 0.0
                 one_epoch_pos_loss = 0.0
                 one_epoch_neg_loss_1 = 0.0
@@ -135,7 +135,7 @@ class Model():
             #G-step
 
             for g_epoch in range(config.g_epoch):
-                np.random.shuffle(self.node_list)
+                np.random.shuffle(list(self.node_list))
                 one_epoch_gen_loss = 0.0
 
                 for index in range(len(self.node_list) / config.batch_size):
