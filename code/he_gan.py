@@ -48,9 +48,9 @@ class Model():
         self.latest_checkpoint = tf.train.latest_checkpoint(config.model_log)
         self.saver = tf.train.Saver()
 
-        self.dblp_evaluation = DBLP_evaluation()
+        # self.dblp_evaluation = DBLP_evaluation()
         self.yelp_evaluation = Yelp_evaluation()
-        self.aminer_evaluation = Aminer_evaluation()
+        # self.aminer_evaluation = Aminer_evaluation()
 
         self.config = tf.ConfigProto()
         self.config.gpu_options.allow_growth = True
