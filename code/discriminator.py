@@ -18,7 +18,7 @@ class Discriminator():
                                                      trainable = True)
         self.relation_embedding_matrix = tf.get_variable(name = 'dis_relation_embedding',
                                                          shape = [self.n_relation, self.emd_dim, self.emd_dim],
-                                                         initializer = tf.contrib.layers.xavier_initializer(uniform = False),
+                                                         initializer =  tf.get_variable(tf.initializers.GlorotUniform()(shape=shape)),
                                                          trainable = True)
 
         self.pos_node_id = tf.placeholder(tf.int32, shape = [None])

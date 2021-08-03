@@ -18,24 +18,24 @@ class Generator():
                                                      trainable = True)
         self.relation_embedding_matrix = tf.get_variable(name = "gen_relation_embedding",
                                                          shape = [self.n_relation, self.emd_dim, self.emd_dim],
-                                                         initializer = tf.contrib.layers.xavier_initializer(uniform = False),
+                                                         initializer = tf.get_variable(tf.initializers.GlorotUniform()(shape=shape)),
                                                          trainable = True)
 
         self.gen_w_1 = tf.get_variable(name = 'gen_w',
                                        shape = [self.emd_dim, self.emd_dim],
-                                       initializer = tf.contrib.layers.xavier_initializer(uniform = False),
+                                       initializer =  tf.get_variable(tf.initializers.GlorotUniform()(shape=shape)),
                                        trainable = True)
         self.gen_b_1 = tf.get_variable(name = 'gen_b',
                                        shape = [self.emd_dim],
-                                       initializer = tf.contrib.layers.xavier_initializer(uniform = False),
+                                       initializer = tf.get_variable(tf.initializers.GlorotUniform()(shape=shape)),
                                        trainable = True)
         self.gen_w_2 = tf.get_variable(name = 'gen_w_2',
                                        shape = [self.emd_dim, self.emd_dim],
-                                       initializer = tf.contrib.layers.xavier_initializer(uniform = False),
+                                       initializer =  tf.get_variable(tf.initializers.GlorotUniform()(shape=shape)),
                                        trainable = True)
         self.gen_b_2 = tf.get_variable(name = 'gen_b_2',
                                        shape = [self.emd_dim],
-                                       initializer = tf.contrib.layers.xavier_initializer(uniform = False),
+                                       initializer =  tf.get_variable(tf.initializers.GlorotUniform()(shape=shape)),
                                        trainable = True)
         #self.bias_vector = tf.Variable(tf.zeros([self.n_node]))
 
