@@ -248,7 +248,7 @@ class Model():
         for node_id in list(self.node_list)[index * config.batch_size : (index + 1) * config.batch_size]:
             for i in range(config.n_sample):
                 relations = self.graph[node_id].keys()
-                relation_id = relations[np.random.randint(0, len(relations))]
+                relation_id = list(relations)[np.random.randint(0, len(relations))]
 
                 node_ids.append(node_id)
                 relation_ids.append(relation_id)
