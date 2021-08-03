@@ -205,12 +205,12 @@ class Model():
         node_fake_neighbor_embedding = None
 
 
-        for node_id in self.node_list[index * config.batch_size : (index + 1) * config.batch_size]:
+        for node_id in list(self.node_list)[index * config.batch_size : (index + 1) * config.batch_size]:
             for i in range(config.n_sample):
 
                 # sample real node and true relation
                 relations = self.graph[node_id].keys()
-                relation_id = relations[np.random.randint(0, len(relations))]
+                relation_id = list(relations)[np.random.randint(0, len(relations))]
                 neighbors = self.graph[node_id][relation_id]
                 node_neighbor_id = neighbors[np.random.randint(0, len(neighbors))]
 
@@ -245,7 +245,7 @@ class Model():
         node_ids = []
         relation_ids = []
 
-        for node_id in self.node_list[index * config.batch_size : (index + 1) * config.batch_size]:
+        for node_id in list(self.node_list)[index * config.batch_size : (index + 1) * config.batch_size]:
             for i in range(config.n_sample):
                 relations = self.graph[node_id].keys()
                 relation_id = relations[np.random.randint(0, len(relations))]
