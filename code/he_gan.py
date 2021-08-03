@@ -15,13 +15,13 @@ class Model():
     def __init__(self):
 
         t = time.time()
-        print "reading graph..."
+        print("reading graph...")
         self.n_node, self.n_relation, self.graph = utils.read_graph(config.graph_filename)
         self.node_list = self.graph.keys()#range(0, self.n_node)
-        print '[%.2f] reading graph finished. #node = %d #relation = %d' % (time.time() - t, self.n_node, self.n_relation)
+        print('[%.2f] reading graph finished. #node = %d #relation = %d' % (time.time() - t, self.n_node, self.n_relation))
 
         t = time.time()
-        print "read initial embeddings..."
+        print("read initial embeddings...")
         self.node_embed_init_d = utils.read_embeddings(filename=config.pretrain_node_emb_filename_d,
                                                        n_node=self.n_node,
                                                        n_embed=config.n_emb)
@@ -35,9 +35,9 @@ class Model():
         #self.rel_embed_init_g = utils.read_embeddings(filename=config.pretrain_rel_emb_filename_g,
         #                                              n_node=self.n_node,
         #                                              n_embed=config.n_emb)
-        print "[%.2f] read initial embeddings finished." % (time.time() - t)
+        print("[%.2f] read initial embeddings finished." % (time.time() - t))
 
-        print "build GAN model..."
+        print("build GAN model...")
         self.discriminator = None
         self.generator = None
         self.build_generator()
@@ -59,22 +59,22 @@ class Model():
         self.show_config()
 
     def show_config(self):
-        print '--------------------'
-        print 'Model config : '
-        print 'dataset = ', config.dataset
-        print 'batch_size = ', config.batch_size
-        print 'lambda_gen = ', config.lambda_gen
-        print 'lambda_dis = ', config.lambda_dis
-        print 'n_sample = ', config.n_sample
-        print 'lr_gen = ', config.lr_gen
-        print 'lr_dis = ', config.lr_dis
-        print 'n_epoch = ', config.n_epoch
-        print 'd_epoch = ', config.d_epoch
-        print 'g_epoch = ', config.g_epoch
-        print 'n_emb = ', config.n_emb
-        print 'sig = ', config.sig
-        print 'label smooth = ', config.label_smooth
-        print '--------------------'
+        print('--------------------')
+        print('Model config : ')
+        print('dataset = ', config.dataset)
+        print('batch_size = ', config.batch_size)
+        print('lambda_gen = ', config.lambda_gen)
+        print('lambda_dis = ', config.lambda_dis)
+        print('n_sample = ', config.n_sample)
+        print('lr_gen = ', config.lr_gen)
+        print('lr_dis = ', config.lr_dis)
+        print('n_epoch = ', config.n_epoch)
+        print('d_epoch = ', config.d_epoch)
+        print('g_epoch = ', config.g_epoch)
+        print('n_emb = ', config.n_emb)
+        print('sig = ', config.sig)
+        print('label smooth = ', config.label_smooth)
+        print('--------------------')
 
     def build_generator(self):
         #with tf.variable_scope("generator"):
@@ -91,9 +91,9 @@ class Model():
 
     def train(self):
 
-        print 'start traning...'
+        print('start traning...')
         for epoch in range(config.n_epoch):
-            print 'epoch %d' % epoch
+            print('epoch %d' % epoch)
             t = time.time()
 
             one_epoch_gen_loss = 0.0
@@ -154,36 +154,36 @@ class Model():
 
             #print t2 - t1
             #exit()
-            print '[%.2f] gen loss = %.4f, dis loss = %.4f pos loss = %.4f neg loss-1 = %.4f neg loss-2 = %.4f' % \
+            print('[%.2f] gen loss = %.4f, dis loss = %.4f pos loss = %.4f neg loss-1 = %.4f neg loss-2 = %.4f' % \
                     (time.time() - t, one_epoch_gen_loss / one_epoch_batch_num, one_epoch_dis_loss / one_epoch_batch_num,
-                    one_epoch_pos_loss / one_epoch_batch_num, one_epoch_neg_loss_1 / one_epoch_batch_num, one_epoch_neg_loss_2 / one_epoch_batch_num)
+                    one_epoch_pos_loss / one_epoch_batch_num, one_epoch_neg_loss_1 / one_epoch_batch_num, one_epoch_neg_loss_2 / one_epoch_batch_num))
 
 
             if config.dataset == 'dblp':
                 gen_nmi, dis_nmi = self.evaluate_author_cluster()
-                print 'Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi)
+                print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
                 #micro_f1s, macro_f1s = self.evaluate_author_classification()
-                #print 'Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
-                #print 'Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
+                #print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
+                #print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
             elif config.dataset == 'yelp':
                 gen_nmi, dis_nmi = self.evaluate_business_cluster()
-                print 'Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi)
+                print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
                 #micro_f1s, macro_f1s = self.evaluate_business_classification()
-                #print 'Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
-                #print 'Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
+                #print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
+                #print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
             elif config.dataset == 'aminer':
                 gen_nmi, dis_nmi = self.evaluate_paper_cluster()
-                print 'Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi)
+                print('Gen NMI score = %.4f Dis NMI score = %.4f' % (gen_nmi, dis_nmi))
                 #micro_f1s, macro_f1s = self.evaluate_paper_classification()
-                #print 'Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
-                #print 'Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
+                #print('Gen Micro_f1 = %.4f Dis Micro_f1 = %.4f' %(micro_f1s[0], micro_f1s[1])
+                #print('Gen Macro_f1 = %.4f Dis Macro_f1 = %.4f' %(macro_f1s[0], macro_f1s[1])
 
             #self.evaluate_aminer_link_prediction()
             #self.write_embeddings_to_file(epoch)
             #os.system('python ../evaluation/lp_evaluation_2.py')
 
 
-        print "training completes"
+        print("training completes")
 
     def prepare_data_for_d(self, index):
 
@@ -328,11 +328,11 @@ class Model():
             embedding_matrix = self.sess.run(modes[i].node_embedding_matrix)
 
             #score = self.yelp_evaluation.evaluate_business_cluster(embedding_matrix)
-            #print '%d nmi = %.4f' % (i, score)
+            #print('%d nmi = %.4f' % (i, score)
 
             auc, f1, acc = self.yelp_evaluation.evaluation_link_prediction(embedding_matrix)
 
-            print 'auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc)
+            print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
 
     def evaluate_dblp_link_prediction(self):
         modes = [self.generator, self.discriminator]
@@ -343,7 +343,7 @@ class Model():
 
             auc, f1, acc = self.dblp_evaluation.evaluation_link_prediction(embedding_matrix)
 
-            print 'auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc)
+            print('auc = %.4f f1 = %.4f acc = %.4f' % (auc, f1, acc))
 
 
     def write_embeddings_to_file(self, epoch):
