@@ -111,7 +111,7 @@ class Model():
                 one_epoch_neg_loss_1 = 0.0
                 one_epoch_neg_loss_2 = 0.0
 
-                for index in range(len(self.node_list) / config.batch_size):
+                for index in range(round(len(self.node_list) / config.batch_size)):
                     #t1 = time.time()
                     pos_node_ids, pos_relation_ids, pos_node_neighbor_ids, neg_node_ids_1, neg_relation_ids_1, neg_node_neighbor_ids_1, neg_node_ids_2, neg_relation_ids_2, node_fake_neighbor_embedding = self.prepare_data_for_d(index)
                     #t2 = time.time()
@@ -138,7 +138,7 @@ class Model():
                 np.random.shuffle(list(self.node_list))
                 one_epoch_gen_loss = 0.0
 
-                for index in range(len(self.node_list) / config.batch_size):
+                for index in range(round(len(self.node_list) / config.batch_size)):
 
                     gen_node_ids, gen_relation_ids, gen_noise_embedding, gen_dis_node_embedding, gen_dis_relation_embedding = self.prepare_data_for_g(index)
                     t2 = time.time()
