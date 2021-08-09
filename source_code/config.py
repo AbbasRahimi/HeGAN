@@ -15,9 +15,9 @@ g_epoch = 5
 
 n_emb = 64
 
-dataset = 'yelp'
+# dataset = 'yelp'
 # dataset = 'dblp'
-# dataset = 'family'
+dataset = 'family'
 
 #graph_filename = '../data/' + dataset + '/' + dataset + '_triple.dat'
 graph_filename = 'data/' + dataset + '_triple.dat'
